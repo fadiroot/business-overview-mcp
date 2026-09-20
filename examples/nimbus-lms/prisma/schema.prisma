@@ -1,0 +1,131 @@
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+  SUPPORT
+  MODERATOR
+  AUDITOR
+}
+
+enum EnrollmentStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  REFUNDED
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  name          String
+  role          Role           @default(STUDENT)
+  createdAt     DateTime       @default(now())
+  profile       Profile?
+  courses       Course[]
+  enrollments   Enrollment[]
+  reviews       Review[]
+  notifications Notification[]
+}
+
+model Profile {
+  id      Int     @id @default(autoincrement())
+  bio     String?
+  country String?
+  user    User    @relation(fields: [userId], references: [id])
+  userId  Int     @unique
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  courses Course[]
+}
+
+model Course {
+  id           Int          @id @default(autoincrement())
+  title        String
+  slug         String       @unique
+  priceCents   Int
+  published    Boolean      @default(false)
+  instructor   User         @relation(fields: [instructorId], references: [id])
+  instructorId Int
+  categories   Category[]
+  modules      Module[]
+  enrollments  Enrollment[]
+  reviews      Review[]
+}
+
+model Module {
+  id       Int      @id @default(autoincrement())
+  title    String
+  position Int
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId Int
+  lessons  Lesson[]
+}
+
+model Lesson {
+  id        Int    @id @default(autoincrement())
+  title     String
+  videoUrl  String?
+  durationS Int
+  module    Module @relation(fields: [moduleId], references: [id])
+  moduleId  Int
+}
+
+model Enrollment {
+  id          Int              @id @default(autoincrement())
+  status      EnrollmentStatus @default(PENDING)
+  startedAt   DateTime         @default(now())
+  student     User             @relation(fields: [studentId], references: [id])
+  studentId   Int
+  course      Course           @relation(fields: [courseId], references: [id])
+  courseId    Int
+  payment     Payment?
+  certificate Certificate?
+}
+
+model Payment {
+  id           Int        @id @default(autoincrement())
+  amountCents  Int
+  provider     String
+  providerRef  String     @unique
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+  enrollmentId Int        @unique
+}
+
+model Review {
+  id       Int    @id @default(autoincrement())
+  rating   Int
+  comment  String?
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId Int
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+}
+
+model Certificate {
+  id           Int        @id @default(autoincrement())
+  serial       String     @unique
+  issuedAt     DateTime   @default(now())
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+  enrollmentId Int        @unique
+}
+
+model Notification {
+  id     Int     @id @default(autoincrement())
+  body   String
+  readAt DateTime?
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+/// Left over from the first billing system. Nothing reads it any more.
+model LegacyInvoice {
+  id     Int    @id @default(autoincrement())
+  ref    String
+  amount Int
+}

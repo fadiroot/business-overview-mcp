@@ -1,0 +1,73 @@
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+enum Role {
+  ADMIN
+  MANAGER
+  CUSTOMER
+  SUPPORT
+  AUDITOR
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  role      Role     @default(CUSTOMER)
+  orders    Order[]
+  profile   Profile?
+  createdAt DateTime @default(now())
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String?
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  priceCents  Int
+  categories  Category[]
+  orderItems  OrderItem[]
+  @@map("products")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  status    String
+  total     Decimal
+  user      User        @relation(fields: [userId], references: [id])
+  userId    Int
+  items     OrderItem[]
+  payment   Payment?
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  qty       Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model Payment {
+  id        Int    @id @default(autoincrement())
+  provider  String
+  order     Order  @relation(fields: [orderId], references: [id])
+  orderId   Int    @unique
+}
+
+model LegacyCoupon {
+  id   Int    @id @default(autoincrement())
+  code String
+}

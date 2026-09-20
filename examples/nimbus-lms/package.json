@@ -1,0 +1,17 @@
+{
+  "name": "nimbus-lms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo course platform used to show what Business Overview MCP extracts. Not a real product.",
+  "dependencies": {
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/passport": "^10.0.0",
+    "@prisma/client": "^5.0.0",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "stripe": "^14.0.0",
+    "@sendgrid/mail": "^8.0.0"
+  },
+  "devDependencies": { "prisma": "^5.0.0", "typescript": "^5.0.0" }
+}

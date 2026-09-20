@@ -1,0 +1,1 @@
+{ "name": "acme-shop", "version": "1.0.0", "dependencies": { "@nestjs/core": "^10", "@nestjs/passport": "^10", "@prisma/client": "^5", "express": "^4", "stripe": "^14", "@sendgrid/mail": "^8", "react": "^18", "next": "^14" }, "devDependencies": { "prisma": "^5", "typescript": "^5" } }
