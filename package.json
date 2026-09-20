@@ -1,0 +1,37 @@
+{
+  "name": "business-overview-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that scans a codebase and explains it in business terms: features, use cases, roles, restrictions, data model and enterprise diagrams.",
+  "type": "module",
+  "bin": { "business-overview-mcp": "dist/index.js" },
+  "main": "dist/index.js",
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json --watch",
+    "test": "node --test dist/test/mcp.test.js",
+    "smoke": "node dist/test/smoke.js"
+  },
+  "keywords": [
+    "mcp", "model-context-protocol", "claude", "code-analysis", "architecture",
+    "documentation", "rbac", "access-control", "diagrams", "mermaid", "erd",
+    "use-cases", "reverse-engineering", "legacy-code", "static-analysis"
+  ],
+  "repository": { "type": "git", "url": "git+https://github.com/fadiroot/business-overview-mcp.git" },
+  "bugs": { "url": "https://github.com/fadiroot/business-overview-mcp/issues" },
+  "homepage": "https://github.com/fadiroot/business-overview-mcp#readme",
+  "author": "Fadi Romdhan",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.126.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "fast-glob": "^3.3.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.9.3"
+  }
+}
