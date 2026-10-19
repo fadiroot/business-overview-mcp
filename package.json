@@ -3,49 +3,24 @@
   "version": "0.1.0",
   "description": "MCP server that scans a codebase and explains it in business terms: features, use cases, roles, restrictions, data model and enterprise diagrams.",
   "type": "module",
-  "bin": {
-    "business-overview-mcp": "dist/index.js"
-  },
+  "bin": { "business-overview-mcp": "dist/index.js" },
   "main": "dist/index.js",
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "engines": {
-    "node": ">=20"
-  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
   "scripts": {
-    "build": "node api.js && tsc -p tsconfig.json",
-    "start": "node api.js && node dist/index.js",
-    "dev": "node api.js && tsc -p tsconfig.json --watch",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json --watch",
     "test": "node --test dist/test/mcp.test.js",
     "smoke": "node dist/test/smoke.js"
   },
   "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "claude",
-    "code-analysis",
-    "architecture",
-    "documentation",
-    "rbac",
-    "access-control",
-    "diagrams",
-    "mermaid",
-    "erd",
-    "use-cases",
-    "reverse-engineering",
-    "legacy-code",
-    "static-analysis"
+    "mcp", "model-context-protocol", "claude", "code-analysis", "architecture",
+    "documentation", "rbac", "access-control", "diagrams", "mermaid", "erd",
+    "use-cases", "reverse-engineering", "legacy-code", "static-analysis"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fadiroot/business-overview-mcp.git"
-  },
-  "bugs": {
-    "url": "https://github.com/fadiroot/business-overview-mcp/issues"
-  },
+  "repository": { "type": "git", "url": "git+https://github.com/fadiroot/business-overview-mcp.git" },
+  "bugs": { "url": "https://github.com/fadiroot/business-overview-mcp/issues" },
   "homepage": "https://github.com/fadiroot/business-overview-mcp#readme",
   "author": "Fadi Romdhan",
   "license": "MIT",
